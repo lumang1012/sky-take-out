@@ -1,19 +1,22 @@
 package com.sky.context;
 
 public class BaseContext {
+    //调用线程进行存储
+   public static ThreadLocal<Long> threadLocal = new ThreadLocal<>();
 
-    public static ThreadLocal<Long> threadLocal = new ThreadLocal<>();
-
-    public static void setCurrentId(Long id) {
+   //设置id
+    public static void setCurrentId(Long id){
         threadLocal.set(id);
     }
-
-    public static Long getCurrentId() {
+    //获取id
+    public static Long getCurrentId(){
         return threadLocal.get();
     }
 
-    public static void removeCurrentId() {
+    //移除id的存储
+    public static void removeCurrentId(){
         threadLocal.remove();
     }
+
 
 }
