@@ -35,4 +35,7 @@ public interface CategoryMapper {
 
     //根据type查询分类
     List<Category> list(Integer type);
+
+//    //根据id获取种类名字
+//    String getById(Long categoryId);
 }

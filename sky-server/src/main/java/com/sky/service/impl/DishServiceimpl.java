@@ -9,6 +9,7 @@ import com.sky.dto.DishPageQueryDTO;
 import com.sky.entity.Dish;
 import com.sky.entity.DishFlavor;
 import com.sky.exception.DeletionNotAllowedException;
+import com.sky.mapper.CategoryMapper;
 import com.sky.mapper.DishFlavorMapper;
 import com.sky.mapper.DishMapper;
 import com.sky.mapper.SetmealDishMapper;
@@ -31,6 +32,8 @@ public class DishServiceimpl implements DishService {
     private DishFlavorMapper dishFlavorMapper;
     @Autowired
     private SetmealDishMapper setmealDishMapper;
+    @Autowired
+    private CategoryMapper categoryMapper;
 
 //    新增菜品
     @Override
@@ -90,6 +93,45 @@ public class DishServiceimpl implements DishService {
             dishFlavorMapper.deleteByDishId(id);
         }
 
+
+    }
+
+    //获取菜品以及口味
+    @Override
+    public DishVO getByIdWithFlavor(Long id) {
+        //获取菜品信息
+        Dish dish = dishMapper.getById(id);
+        Long categoryId = dish.getCategoryId();
+        //通过种类id来获取种类信息???????????
+//        String categoryName = categoryMapper.getById(categoryId);
+        //通过菜品id获取口味
+        List<DishFlavor> dishFlavors = dishFlavorMapper.getByDishId(id);
+        //将查询到的数据封装到vo
+        DishVO dishVO = new DishVO();
+        BeanUtils.copyProperties(dish,dishVO);
+        dishVO.setFlavors(dishFlavors);
+        return dishVO;
+    }
+
+    //修改菜品及口味
+    //涉及修改不要忘记autofill这个注解，修改人和时间
+    @Override
+    public void updateWithFlavor(DishDTO dishDTO) {
+        Dish dish = new Dish();
+        //拷贝属性，注意加上修改人和时间
+        BeanUtils.copyProperties(dishDTO,dish);
+        dishMapper.update(dish);
+        //关于口味的修改，先将原本的口味全部删除，然后再批量插入新的口味
+        //有个疑问，为何不使用更新方法,估计想更省事，直接服用代码
+        dishFlavorMapper.deleteByDishId(dish.getId());
+        //重新插入口味数据
+        List<DishFlavor> flavors = dishDTO.getFlavors();
+        //首先判断是否存在口味数据
+        if(flavors != null && flavors.size() > 0){
+            //为每一个口味设置菜品id
+            flavors.forEach(dishFlavor -> {dishFlavor.setDishId(dishDTO.getId());});
+            dishFlavorMapper.insertBatch(flavors);
+        }
 
     }
 }

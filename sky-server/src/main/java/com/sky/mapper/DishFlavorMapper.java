@@ -4,6 +4,7 @@ import com.sky.entity.DishFlavor;
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Select;
 import org.springframework.web.bind.annotation.DeleteMapping;
 
 import java.util.List;
@@ -18,4 +19,8 @@ public interface DishFlavorMapper {
     //通过菜品id来删除口味
     @Delete("delete from dish_flavor where dish_id = #{id}")
     void deleteByDishId(Long id);
+
+    //通过菜品id获取口味
+    @Select("select * from dish_flavor where dish_id = #{dishId}")
+    List<DishFlavor> getByDishId(Long dishId);
 }
