@@ -12,6 +12,8 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 import org.springframework.web.bind.annotation.DeleteMapping;
 
+import java.util.List;
+
 @Mapper
 public interface DishMapper {
     @Select("select count() from dish where category_id = #{id}")
@@ -37,4 +39,7 @@ public interface DishMapper {
     //千万不要忘记加注解
     @AutoFill(value = OperationType.UPDATE)
     void update(Dish dish);
+
+    //根据菜品分类id查询菜品(动态查询菜品)
+    List<Dish> list(Dish dish);
 }
