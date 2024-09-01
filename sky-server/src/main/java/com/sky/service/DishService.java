@@ -20,8 +20,16 @@ public interface DishService {
 
     //根据id获取菜品信息，还有口味
     DishVO getByIdWithFlavor(Long id);
-
+//通过传递来的菜品信息更新菜品及口味
     void updateWithFlavor(DishDTO dishDTO);
-
+//根据分类id展示菜品
     List<Dish> list(Long categoryId);
+
+    /**
+     * 条件查询菜品和口味
+     * @param dish
+     * @return
+     */
+    List<DishVO> listWithFlavor(Dish dish);
+
 }
