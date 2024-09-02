@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<!--      以下四个要按顺序，但是原因未知-->
 <mapper namespace = "com.sky.mapper.ShoppingCartMapper">
     <select id="list" parameterType="ShoppingCart" resultType="ShoppingCart">
         select * from shopping_cart
+
         <where>
---         以下四个要按顺序，但是原因未知
             <if test="userId != null">
                 and user_id = #{userId}
             </if>
@@ -18,8 +19,6 @@
             <if test="dishFlavor != null">
                 and dish_flavor = #{dishFlavor}
             </if>
---                  忘记添加userId
-
         </where>
         order by create_time desc
     </select>
