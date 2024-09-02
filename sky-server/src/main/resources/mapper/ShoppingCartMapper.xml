@@ -5,6 +5,10 @@
     <select id="list" parameterType="ShoppingCart" resultType="ShoppingCart">
         select * from shopping_cart
         <where>
+--         以下四个要按顺序，但是原因未知
+            <if test="userId != null">
+                and user_id = #{userId}
+            </if>
             <if test="dishId != null">
                 and dish_id = #{dishId}
             </if>
@@ -15,9 +19,7 @@
                 and dish_flavor = #{dishFlavor}
             </if>
 --                  忘记添加userId
-            <if test="userId != null">
-                and user_id = #{userId}
-            </if>
+
         </where>
         order by create_time desc
     </select>
