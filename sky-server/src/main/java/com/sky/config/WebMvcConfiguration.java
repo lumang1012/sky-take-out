@@ -43,16 +43,22 @@ public class WebMvcConfiguration extends WebMvcConfigurationSupport {
         registry.addInterceptor(jwtTokenAdminInterceptor)
                 .addPathPatterns("/admin/**")
                 .excludePathPatterns("/admin/employee/login");
-    }
-
-    //注册自定义拦截器
-    protected void addInterceptor(InterceptorRegistry registry){
-        log.info("开始注册自定义拦截器");
         registry.addInterceptor(jwtTokenUserInterceptor)
                 .addPathPatterns("/user/**")
                 .excludePathPatterns("/user/user/login")
                 .excludePathPatterns("/user/shop/status");
     }
+    //由于写错了拦截器，从而导致了购物车添加代码出错，没有报错，数据库没有添加数据，微信小程序回复
+    //是显示出错，但是错误的原因不清楚
+//
+//    //注册自定义拦截器
+//    protected void addInterceptors(InterceptorRegistry registry){
+//        log.info("开始注册自定义拦截器");
+//        registry.addInterceptor(jwtTokenUserInterceptor)
+//                .addPathPatterns("/user/**")
+//                .excludePathPatterns("/user/user/login")
+//                .excludePathPatterns("/user/shop/status");
+//    }
 
     /**
      * 通过knife4j生成接口文档
