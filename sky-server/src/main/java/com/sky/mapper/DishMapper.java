@@ -13,6 +13,7 @@ import org.apache.ibatis.annotations.Select;
 import org.springframework.web.bind.annotation.DeleteMapping;
 
 import java.util.List;
+import java.util.Map;
 
 @Mapper
 public interface DishMapper {
@@ -42,4 +43,11 @@ public interface DishMapper {
 
     //根据菜品分类id查询菜品(动态查询菜品)
     List<Dish> list(Dish dish);
+
+    /**
+     * 根据条件统计菜品数量
+     * @param map
+     * @return
+     */
+    Integer countByMap(Map map);
 }
