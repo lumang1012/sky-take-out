@@ -31,7 +31,7 @@ public class WorkSpaceServiceImpl implements WorkSpaceService {
     private DishMapper dishMapper;
     @Autowired
     private SetmealMapper setmealMapper;
-    //工作台今日数据查询
+    //工作台数据查询
     @Override
     public BusinessDataVO getBusinessData(LocalDateTime begin, LocalDateTime end) {
         //构建map对象，用来向mapper传递参数
